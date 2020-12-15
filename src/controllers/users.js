@@ -1,52 +1,71 @@
 const bcrypt = require('bcrypt')
 const { v4: uuidv4 } = require('uuid')
 const jwt = require('jsonwebtoken')
-const { checkUser, insertUser } = require('../models/users')
-const helper = require('../helpers/helpers')
+const usersModels = require('../models/users')
+const { response } = require('../helpers/helpers')
+const createError = require('http-errors')
 
-exports.registerUsers = (req, res) => {
-    const id = uuidv4()
-    const { email, password, phoneNumber } = req.body
-    const roleId = req.body.roleId || 0
-    checkUser(email)
-    .then((result) => {
-      if (result.length > 0) return helper.response(res, null, 401, { error: 'email sudah ada' })
+const usersController = {
+    registerUsers: (req, res, next) => {
+        const id = uuidv4()
+        const { email, password, phoneNumber } = req.body
+        usersModels.checkUsers(email)
+        .then((result) => {
+            if (result.length > 0) {
+                const error = new createError(409, `Forbidden: Email already exists. `)
+                return next(error)
+            }
 
-      bcrypt.genSalt(10, function (err, salt) {
-        bcrypt.hash(password, salt, function (err, hash) {
-          const data = {
-            id,
-            email,
-            password: hash,
-            roleId,
-            phoneNumber,
-            createdAt: new Date()
-          }
-          
-          insertUser(data)
-          .then(() => {
-              return helper.response(res, { message: 'register success' }, 201, null)
+            bcrypt.genSalt(10, function (err, salt) {
+                bcrypt.hash(password, salt, function (err, hash) {
+                    const data = {
+                        id,
+                        email,
+                        password: hash,
+                        phoneNumber,
+                        createdAt: new Date()
+                    }
+                    
+                    usersModels.insertUsers(data)
+                    .then(() => {
+                        return response(res, {message: 'User Has been created'}, {
+                            status: 'succeed',
+                            statusCode: 200
+                          }, null)
+                        //   response(res, {message: 'Register Succes'}, 200, null)
+                    })
+                })
             })
         })
-      })
-    })
-}
-
-exports.loginUsers = (req, res) => {
-    const { email, password } = req.body
-    checkUser(email)
-    .then((result) => {
-      const user = result[0]
-      // compare/verify password
-      bcrypt.compare(password, user.password, function (err, resCheck) {
-        if (!resCheck) return helper.response(res, null, 401, { error: 'password wrong !!' })
-        delete user.password
-
-        // jsonwebtoken
-        jwt.sign({ userID: user.id, email: user.email }, process.env.SECRET_KEY, { expiresIn: '1h' }, function (err, token) {
-          user.token = token
-          return helper.response(res, user, 200, null)
+    },
+    loginUsers: (req, res, next) => {
+        const { email, password } = req.body
+        usersModels.checkUsers(email)
+        .then((result) => {
+            const user = result[0]
+            
+            // compare/verify password
+            bcrypt.compare(password, user.password, function (err, resCheck) {
+                if (!resCheck) {
+                    const error = new createError(401, `Password Wrong `)
+                    return next(error)
+                }
+                delete user.password
+                delete user.roleID
+                delete user.updatedAt
+                delete user.createdAt
+                
+            // jsonwebtoken
+            jwt.sign({ userID: user.id, email: user.email }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '1h' }, function (err, token) {
+                user.token = token
+                return response(res, user, {
+                    status: 'succeed',
+                    statusCode: 200
+                  }, null)
+            })
         })
-      })
     })
+    }
 }
+
+module.exports = usersController

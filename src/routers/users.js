@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const { loginUsers, registerUsers } = require('../controllers/users')
+const usersController = require('../controllers/users')
 
 router
   .get('/')
-  .post('/register', registerUsers)
-  .post('/login', loginUsers)
+  .post('/register', usersController.registerUsers)
+  .post('/login', usersController.loginUsers)
 
 module.exports = router

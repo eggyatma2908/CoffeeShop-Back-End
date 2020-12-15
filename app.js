@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
+const { response } = require('./src/helpers/helpers')
 const cors = require('cors') 
 const usersRoute = require('./src/routers/users')
 
@@ -22,12 +23,12 @@ app.use('/v1/users', usersRoute)
 
 // Default Response Unknown End-Point
 app.use('*', (req, res) => {
-    console.log('Tes')
+
 })
 
 // Error Handling
 app.use((err, req, res, next) => {
-
+    response(res, null, { status: err.status || 'Failed', statusCode: err.statusCode || 400 }, { message: err.message })
 })
 
 app.listen(process.env.PORT, () => console.log('Server running on port : '+ process.env.PORT))

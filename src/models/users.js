@@ -1,25 +1,12 @@
-const connection = require('../configs/db')
+const { actionQuery } = require('../helpers/actionQuery')
 
-exports.checkUser = (email) => {
-  return new Promise((resolve, reject) => {
-    connection.query('SELECT * FROM users WHERE email = ?', email, (error, results) => {
-      if (!error) {
-        resolve(results)
-      } else {
-        reject(error)
-      }
-    })
-  })
+const usersModels = {
+    checkUsers: (email) => {
+        return actionQuery('SELECT * FROM users WHERE email = ?', email)
+    },
+    insertUsers: (data) => {
+        return actionQuery('INSERT INTO users SET ?', data)
+    }
 }
 
-exports.insertUser = (data) => {
-  return new Promise((resolve, reject) => {
-    connection.query('INSERT INTO users SET ?', data, (error, results) => {
-      if (!error) {
-        resolve(results)
-      } else {
-        reject(error)
-      }
-    })
-  })
-}
+module.exports = usersModels

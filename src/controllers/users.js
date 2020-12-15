@@ -94,7 +94,7 @@ loginUsers: (req, res, next) => {
           delete user.createdAt
           
       // jsonwebtoken
-      jwt.sign({ userID: user.id, email: user.email }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '1h' }, function (err, token) {
+      jwt.sign({ userID: user.id, email: user.email }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '24h' }, function (err, token) {
           user.token = token
           return response(res, user, {
               status: 'succeed',

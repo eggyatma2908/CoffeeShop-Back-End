@@ -9,6 +9,12 @@ const usersModels = {
   },
   countAmountDataUsers: (table) => {
     return actionQuery(`SELECT COUNT(*) as totalData FROM ${table}`)
+  },
+  checkUsers: (email) => {
+      return actionQuery('SELECT * FROM users WHERE email = ?', email)
+  },
+  insertUsers: (data) => {
+      return actionQuery('INSERT INTO users SET ?', data)
   }
 }
 

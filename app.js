@@ -3,9 +3,9 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
+const { response } = require('./src/helpers/response')
 const cors = require('cors') 
 
-const { response } = require('./src/helpers/response')
 const usersRoute = require('./src/routers/users')
 
 // Using CORS
@@ -28,7 +28,7 @@ app.use('*', (req, res) => {
 
 // Error Handling
 app.use((err, req, res, next) => {
-  response(res, null, { status: 'server problem', statusCode: 500 }, err)
+    response(res, null, { status: err.status || 'Failed', statusCode: err.statusCode || 400 }, { message: err.message })
 })
 
 app.listen(process.env.PORT, () => console.log('Server running on port : '+ process.env.PORT))

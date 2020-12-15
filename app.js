@@ -5,10 +5,11 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const cors = require('cors') 
 
+const { response } = require('./src/helpers/response')
 const usersRoute = require('./src/routers/users')
 
 // Using CORS
-app.use(cors)
+app.use(cors())
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -23,12 +24,11 @@ app.use('/v1/users', usersRoute)
 
 // Default Response Unknown End-Point
 app.use('*', (req, res) => {
-
 })
 
 // Error Handling
 app.use((err, req, res, next) => {
-
+  response(res, null, { status: 'server problem', statusCode: 500 }, err)
 })
 
 app.listen(process.env.PORT, () => console.log('Server running on port : '+ process.env.PORT))

@@ -4,11 +4,10 @@ const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const cors = require('cors') 
-
 const usersRoute = require('./src/routers/users')
 
 // Using CORS
-app.use(cors)
+app.use(cors())
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -23,7 +22,7 @@ app.use('/v1/users', usersRoute)
 
 // Default Response Unknown End-Point
 app.use('*', (req, res) => {
-
+    console.log('Tes')
 })
 
 // Error Handling

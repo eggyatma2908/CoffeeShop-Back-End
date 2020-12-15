@@ -1,7 +1,7 @@
-const nodeMailer = require('node-mailer')
+var nodemailer = require('nodemailer')
 
   // create reusable transporter object using the default SMTP transport
-  const transporter = nodeMailer.createTransport({
+  const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: process.env.EMAIL_USERNAME, // generated ethereal user
@@ -9,7 +9,7 @@ const nodeMailer = require('node-mailer')
     },
   });
 
-  const sendEmail = async (email,name) =>{
+  const sendEmail = async (email) =>{
     const emailTemplate = `<!DOCTYPE html>
     <html lang="en">
     
@@ -95,13 +95,13 @@ const nodeMailer = require('node-mailer')
       <div class="container">
         <h1>Zwallet</h1>
         <div class="box mx-auto mt-5 p-5">
-          <h2>Hai <span style="text-transform:capitalize">${name}</span></h2>
+          <h2>Hai <span style="text-transform:capitalize">${email.replace('@gmail.com', '')}</span></h2>
           <p class="desc mt-3">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, eius nemo animi autem
             in optio quos libero cupiditate alias ab obcaecati dolores pariatur, officiis nam, assumenda necessitatibus
             harum accusantium tenetur praesentium delectus sit? Ipsum officiis hic laborum architecto delectus! Et.</p>
           <p class="desc mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores ducimus, nostrum ea rerum
             quaerat suscipit!</p>
-          <a href="${process.env.BASE_URL_FRONT_END}/emailverification/${email}" class="btn">Verify email</a >
+          <a href="${process.env.BASE_URL_FRONT_END}/emailverification/${email.replace('@gmail.com', '')}" class="btn">Verify email</a >
           <hr>
           <p class="footer">
             Need help? Contact our support team or hit us up on email <a
@@ -114,7 +114,6 @@ const nodeMailer = require('node-mailer')
     
     </html>`
     return new Promise((resolve, reject)=>{
-  
       const message = {
         from: process.env.EMAIL_USERNAME, // sender address
         to: email, // list of receivers

@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const usersModels = require('../models/users')
 const { pagination } = require('../helpers/pagination')
 const { response } = require('../helpers/response')
-
+const sendEmail = require('../helpers/sendEmail')
 const usersController =  {
   getUsers: async (req, res, next) => {
     const { limit = 4, page = 1, order = "DESC" } = req.query
@@ -76,34 +76,50 @@ const usersController =  {
         })
     })
 },
-loginUsers: (req, res, next) => {
-  const { email, password } = req.body
-  usersModels.checkUsers(email)
-  .then((result) => {
-      const user = result[0]
-      
-      // compare/verify password
-      bcrypt.compare(password, user.password, function (err, resCheck) {
-          if (!resCheck) {
-              const error = new createError(401, `Password Wrong `)
-              return next(error)
-          }
-          delete user.password
-          delete user.roleID
-          delete user.updatedAt
-          delete user.createdAt
-          
-      // jsonwebtoken
-      jwt.sign({ userID: user.id, email: user.email }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '24h' }, function (err, token) {
-          user.token = token
-          return response(res, user, {
-              status: 'succeed',
-              statusCode: 200
-            }, null)
-      })
+  loginUsers: (req, res, next) => {
+    const { email, password } = req.body
+    usersModels.checkUsers(email)
+    .then((result) => {
+        const user = result[0]
+        
+        // compare/verify password
+        bcrypt.compare(password, user.password, function (err, resCheck) {
+            if (!resCheck) {
+                const error = new createError(401, `Password Wrong `)
+                return next(error)
+            }
+            delete user.password
+            delete user.roleID
+            delete user.updatedAt
+            delete user.createdAt
+            
+        // jsonwebtoken
+        jwt.sign({ userID: user.id, email: user.email }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '24h' }, function (err, token) {
+            user.token = token
+            return response(res, user, {
+                status: 'succeed',
+                statusCode: 200
+              }, null)
+        })
+    })
   })
-})
-}
+  },
+  sendEmailVerification: async (req, res, next) => {
+    const email = req.body.email
+    if(!email) {
+      const error = new createError(400, `Forbidden: Email cannot be empty. `)
+      return next(error)
+    }
+    try {
+      const results = await sendEmail(email)
+      console.log(results)
+      return next()
+    } catch (error) {
+      const errorResult = new createError(500, 'Looks like server having trouble')
+      return next(errorResult)
+    }
+
+  } 
 }
 
 module.exports = usersController

@@ -9,8 +9,8 @@ exports.pagination = async (limit, page, endpoint, table) => {
     totalPage,
     currentPage: page,
     perPage: limit,
-    prevPage: page > 1 ? `${process.env.BASE_URL}/v1/${endpoint}?page=${page - 1}&limit=${limit}` : null,
-    nextPage: page < totalPage ? `${process.env.BASE_URL}/v1/${endpoint}?page=${page + 1}&limit=${limit}` : null,
+    prevPage: page > 1 ? `${process.env.BASE_URL}/v1/${endpoint}?page=${parseInt(page) - 1}&limit=${limit}` : null,
+    nextPage: page < totalPage ? `${process.env.BASE_URL}/v1/${endpoint}?page=${parseInt(page) + 1}&limit=${limit}` : null,
   }
   return setPagination
 }

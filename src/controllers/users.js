@@ -22,6 +22,25 @@ const usersController =  {
         const error = new createError(500, 'Looks like server having trouble')
         return next(error)
       })
+  },
+  getUserById: async (req, res, next) => {
+    const { idUser } = req.params
+    if(!idUser){
+      const error = new createError(400, 'Id user cannot be empty')
+      return next(error)
+    }
+    usersModels.getUserById(idUser)
+    .then(results => {
+      if(results.length < 1){
+        const error = new createError(400, 'Id user cannot be empty')
+        return next(error)
+      }
+      response(res, results[0], { status: 'succeed', statusCode: 200 }, null)
+    })
+    .catch(() => {
+      const error = new createError(500, 'Looks like server having trouble')
+      return next(error)
+    })
   }
 }
 

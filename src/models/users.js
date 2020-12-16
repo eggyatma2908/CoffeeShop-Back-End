@@ -15,6 +15,9 @@ const usersModels = {
   },
   insertUsers: (data) => {
     return actionQuery('INSERT INTO users SET ?', data)
+  },
+  searchRoleId: (userId) => {
+    return actionQuery('SELECT roleId FROM users WHERE id = ? ', userId)
   }
 }
 

@@ -2,11 +2,13 @@ const express = require('express')
 const router = express.Router()
 
 const { getUsers, getUserById, registerUsers, loginUsers, sendEmailVerification  } = require('../controllers/users')
-const sendEmail = require('../helpers/sendEmail')
+const authenticationToken = require('../helpers/authenticationToken')
+const authorizationUser = require('../helpers/authorizationUser')
+const authorizationAdmin = require('../helpers/authorizationAdmin')
 
 router
-  .get('/', getUsers)
-  .get('/:idUser', getUserById)
+  .get('/', authenticationToken, authorizationUser, getUsers)
+  .get('/:idUser', authenticationToken, authorizationUser, getUserById)
   .post('/register', sendEmailVerification, registerUsers)
   .post('/login', loginUsers)
 

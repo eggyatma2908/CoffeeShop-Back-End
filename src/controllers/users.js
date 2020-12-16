@@ -7,6 +7,7 @@ const usersModels = require('../models/users')
 const { pagination } = require('../helpers/pagination')
 const { response } = require('../helpers/response')
 const sendEmail = require('../helpers/sendEmail')
+
 const usersController =  {
   getUsers: async (req, res, next) => {
     const { limit = 4, page = 1, order = "DESC" } = req.query
@@ -95,8 +96,9 @@ const usersController =  {
               
           // jsonwebtoken
           // accessToken 
-          jwt.sign({ userID: user.id, email: user.email }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '24h' }, function (err, accessToken) {
-              jwt.sign({ userID: user.id, email: user.email }, process.env.REFRESH_TOKEN_KEY, { expiresIn: '48h' }, function (err, refreshToken) {
+          jwt.sign({ userId: user.id, email: user.email }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '24h' }, function (err, accessToken) {
+            // refreshtoken  
+            jwt.sign({ userId: user.id, email: user.email }, process.env.REFRESH_TOKEN_KEY, { expiresIn: '48h' }, function (err, refreshToken) {
                 const responseMessage = {
                     accessToken: accessToken,
                     refreshToken: refreshToken

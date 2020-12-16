@@ -69,7 +69,7 @@ var nodemailer = require('nodemailer')
         .btn {
           display: block;
           margin: 30px auto 0 auto;
-          background-color: #7289DA;
+          background-color: #66A4029;
           color: white !important;
           border: none;
           width: 115px;
@@ -82,6 +82,7 @@ var nodemailer = require('nodemailer')
     
         .email {
           color: #7289DA;
+          text-decoration: none;
         }
     
         hr {
@@ -93,7 +94,7 @@ var nodemailer = require('nodemailer')
     
     <body>
       <div class="container">
-        <h1>Zwallet</h1>
+        <h1>CoffeeShop - Team 1</h1>
         <div class="box mx-auto mt-5 p-5">
           <h2>Hai <span style="text-transform:capitalize">${email.replace('@gmail.com', '')}</span></h2>
           <p class="desc mt-3">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, eius nemo animi autem
@@ -108,7 +109,7 @@ var nodemailer = require('nodemailer')
               class="email"href="mailto:${process.env.EMAIL_USERNAME}">click in here</a>
           </p>
         </div>
-        <p class="footer">Sent by Zwallet</p>
+        <p class="footer">Sent by CoffeeShop Team 1</p>
       </div>
     </body>
     

@@ -79,30 +79,41 @@ const usersController =  {
   loginUsers: (req, res, next) => {
     const { email, password } = req.body
     usersModels.checkUsers(email)
-    .then((result) => {
-        const user = result[0]
-        
-        // compare/verify password
-        bcrypt.compare(password, user.password, function (err, resCheck) {
-            if (!resCheck) {
-                const error = new createError(401, `Password Wrong `)
-                return next(error)
-            }
-            delete user.password
-            delete user.roleID
-            delete user.updatedAt
-            delete user.createdAt
-            
-        // jsonwebtoken
-        jwt.sign({ userID: user.id, email: user.email }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '24h' }, function (err, token) {
-            user.token = token
-            return response(res, user, {
-                status: 'succeed',
-                statusCode: 200
-              }, null)
-        })
+      .then((result) => {
+          const user = result[0]
+          
+          // compare/verify password
+          bcrypt.compare(password, user.password, function (err, resCheck) {
+              if (!resCheck) {
+                  const error = new createError(401, `Password Wrong `)
+                  return next(error)
+              }
+              delete user.password
+              delete user.roleID
+              delete user.updatedAt
+              delete user.createdAt
+              
+          // jsonwebtoken
+          // accessToken 
+          jwt.sign({ userID: user.id, email: user.email }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '24h' }, function (err, accessToken) {
+              jwt.sign({ userID: user.id, email: user.email }, process.env.REFRESH_TOKEN_KEY, { expiresIn: '48h' }, function (err, refreshToken) {
+                const responseMessage = {
+                    accessToken: accessToken,
+                    refreshToken: refreshToken
+                }
+                return response(res, responseMessage, {
+                    status: 'succeed',
+                    statusCode: 200
+                  }, null)
+            })
+          })
+      })
     })
-  })
+    .catch(() => {
+      const error = new createError(500, 'Looks like server having trouble')
+      return next(error)
+    })
+  
   },
   sendEmailVerification: async (req, res, next) => {
     const email = req.body.email
@@ -112,13 +123,11 @@ const usersController =  {
     }
     try {
       const results = await sendEmail(email)
-      console.log(results)
       return next()
     } catch (error) {
       const errorResult = new createError(500, 'Looks like server having trouble')
       return next(errorResult)
     }
-
   } 
 }
 

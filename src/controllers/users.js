@@ -103,6 +103,49 @@ loginUsers: (req, res, next) => {
       })
   })
 })
+},
+deleteUser: (req, res, next) => {
+  const idUser = req.params.idUser
+  usersModels.deleteUser(idUser)
+  .then(result => {
+    const resultUser = result
+    response(res, {message: 'Deleted success'}, {
+      status: 'succeed',
+      statusCode: 200
+    }, null)
+  })
+  .catch(() => {
+    const error = new createError(500, 'Looks like server having trouble')
+    return next(error)
+  })
+},
+updateUser: (req, res) => {
+  const id = req.params.id
+  const { email, phoneNumber, gender, username, firstName, lastName, bornDate, address} = req.body
+
+  const data = {
+    email,
+    phoneNumber,
+    gender,
+    username,
+    firstName,
+    lastName,
+    bornDate,
+    address,
+    photoProfile: `${process.env.BASE_URL}/upload/${req.file.filename}`,
+    updatedAt: new Date()
+    }
+    usersModels.updateUser(id, data)
+      .then(result => {
+        const resultUser = result
+        response(res, {message: 'Data has been updated'}, {
+          status: 'succeed',
+          statusCode: 200
+        }, null)
+      })
+      .catch(err => {
+        console.log(err)
+      })
 }
 }
 

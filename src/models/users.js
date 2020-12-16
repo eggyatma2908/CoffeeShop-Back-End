@@ -21,6 +21,9 @@ const usersModels = {
   },
   updateUser: (id, data) => {
     return actionQuery(`UPDATE users SET email = '${data.email}', phoneNumber = '${data.phoneNumber}', gender = '${data.gender}', username = '${data.username}', firstName = '${data.firstName}', lastName = '${data.lastName}', bornDate = '${data.bornDate}', address = '${data.address}', photoProfile = '${data.photoProfile}', updatedAt = '${data.updatedAt}' WHERE id = ?`, id)
+  },
+  searchRoleId: (userId) => {
+    return actionQuery('SELECT roleId FROM users WHERE id = ? ', userId)
   }
 }
 

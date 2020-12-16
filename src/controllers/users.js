@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const usersModels = require('../models/users')
 const { pagination } = require('../helpers/pagination')
 const { response } = require('../helpers/response')
+const sendEmail = require('../helpers/sendEmail')
 
 const usersController =  {
   getUsers: async (req, res, next) => {
@@ -75,36 +76,43 @@ const usersController =  {
             })
         })
     })
-},
-loginUsers: (req, res, next) => {
-  const { email, password } = req.body
-  usersModels.checkUsers(email)
-  .then((result) => {
-      const user = result[0]
-      
-      // compare/verify password
-      bcrypt.compare(password, user.password, function (err, resCheck) {
-          if (!resCheck) {
-              const error = new createError(401, `Password Wrong `)
-              return next(error)
-          }
-          delete user.password
-          delete user.roleID
-          delete user.updatedAt
-          delete user.createdAt
+  },
+  loginUsers: (req, res, next) => {
+    const { email, password } = req.body
+    usersModels.checkUsers(email)
+      .then((result) => {
+          const user = result[0]
           
-      // jsonwebtoken
-      jwt.sign({ userID: user.id, email: user.email }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '24h' }, function (err, token) {
-          user.token = token
-          return response(res, user, {
-              status: 'succeed',
-              statusCode: 200
-            }, null)
+          // compare/verify password
+          bcrypt.compare(password, user.password, function (err, resCheck) {
+              if (!resCheck) {
+                  const error = new createError(401, `Password Wrong `)
+                  return next(error)
+              }
+              delete user.password
+              delete user.roleID
+              delete user.updatedAt
+              delete user.createdAt
+              
+          // jsonwebtoken
+          // accessToken 
+          jwt.sign({ userId: user.id, email: user.email }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '24h' }, function (err, accessToken) {
+            // refreshtoken  
+            jwt.sign({ userId: user.id, email: user.email }, process.env.REFRESH_TOKEN_KEY, { expiresIn: '48h' }, function (err, refreshToken) {
+                const responseMessage = {
+                    accessToken: accessToken,
+                    refreshToken: refreshToken
+                }
+                return response(res, responseMessage, {
+                    status: 'succeed',
+                    statusCode: 200
+                  }, null)
+            })
+          })
       })
   })
-})
-},
-deleteUser: (req, res, next) => {
+  },
+  deleteUser: (req, res, next) => {
   const idUser = req.params.idUser
   usersModels.deleteUser(idUser)
   .then(result => {
@@ -118,8 +126,8 @@ deleteUser: (req, res, next) => {
     const error = new createError(500, 'Looks like server having trouble')
     return next(error)
   })
-},
-updateUser: (req, res) => {
+  },
+  updateUser: (req, res, next) => {
   const id = req.params.id
   const { email, phoneNumber, gender, username, firstName, lastName, bornDate, address} = req.body
 
@@ -145,8 +153,24 @@ updateUser: (req, res) => {
       })
       .catch(err => {
         console.log(err)
+        const error = new createError(500, 'Looks like server having trouble')
+        return next(error)
       })
-}
+    },
+    sendEmailVerification: async (req, res, next) => {
+    const email = req.body.email
+    if(!email) {
+      const error = new createError(400, `Forbidden: Email cannot be empty. `)
+      return next(error)
+    }
+    try {
+      const results = await sendEmail(email)
+      return next()
+    } catch (error) {
+      const errorResult = new createError(500, 'Looks like server having trouble')
+      return next(errorResult)
+    }
+  } 
 }
 
 module.exports = usersController

@@ -7,6 +7,7 @@ const { response } = require('./src/helpers/response')
 const cors = require('cors') 
 const usersRoute = require('./src/routers/users')
 const productsRoute = require('./src/routers/products')
+const couponsRoute = require('./src/routers/coupons')
 
 // Using CORS
 app.use(cors())
@@ -22,6 +23,7 @@ app.use(morgan('dev'))
 // Grouping End-Point
 app.use('/v1/users', usersRoute)
 app.use('/v1/products', productsRoute)
+app.use('/v1/coupons', couponsRoute)
 
 // Default Response Unknown End-Point
 app.use('*', (req, res) => {

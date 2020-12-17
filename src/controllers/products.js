@@ -9,9 +9,10 @@ const productsController =  {
     console.log('getProducts')
     const { limit = 4, page = 1, order = "DESC" } = req.query
     const offset = (parseInt(page) - 1) * parseInt(limit)
+    const productName = req.query.productName || null
 
     const setPagination = await pagination(limit, page, "products", "products")
-    productsModels.getProducts(limit, offset, order)
+    productsModels.getProducts(limit, offset, order, productName)
       .then(results => {
         const setResults = {
           pagination: setPagination,

@@ -1,8 +1,12 @@
 const { actionQuery } = require('../helpers/actionQuery')
 
 const productsModels = {
-  getProducts: (limit, offset, order) => {
-    return actionQuery(`SELECT idProduct, productName, price, stock, photoProduct, description, discountPercent, idTypeProduct, homeDelivery, dineIn, takeAway FROM products ORDER BY productName ${order} LIMIT ${offset},${limit}`)
+  getProducts: (limit, offset, order, productName) => {
+    if (!productName) {
+      return actionQuery(`SELECT idProduct, productName, price, stock, photoProduct, description, discountPercent, idTypeProduct, homeDelivery, dineIn, takeAway FROM products ORDER BY productName ${order} LIMIT ${offset},${limit}`)
+    } else {
+      return actionQuery(`SELECT idProduct, productName, price, stock, photoProduct, description, discountPercent, idTypeProduct, homeDelivery, dineIn, takeAway FROM products WHERE productName LIKE ?`, `%${productName}%`)
+    }
   },
   getProductById: (idProduct) => {
     return actionQuery('SELECT idProduct, productName, price, stock, photoProduct, description, discountPercent, idTypeProduct, homeDelivery, dineIn, takeAway FROM products WHERE idProduct = ?', idProduct)

@@ -6,6 +6,7 @@ const { response } = require('../helpers/response')
 
 const productsController =  {
   getProducts: async (req, res, next) => {
+    console.log('getProducts')
     const { limit = 4, page = 1, order = "DESC" } = req.query
     const offset = (parseInt(page) - 1) * parseInt(limit)
 

@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const { uploadMulter } = require('../middleware/upload')
 
-const { getUsers, getUserById, registerUsers, loginUsers, deleteUser, updateUser } = require('../controllers/users')
 const { getUsers, getUserById, registerUsers, loginUsers, sendEmailVerification, deleteUser, updateUser  } = require('../controllers/users')
 const authenticationToken = require('../helpers/authenticationToken')
 const authorizationUser = require('../helpers/authorizationUser')

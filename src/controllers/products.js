@@ -80,8 +80,7 @@ const productsController =  {
           statusCode: 200
         }, null)
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
         const error = new createError(500, `Looks like server having trouble`)
         return next(error)
       })
@@ -111,15 +110,13 @@ const productsController =  {
           statusCode: 200
         }, null)
       })
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
         const error = new createError(500, 'Looks like server having trouble')
         return next(error)
       })
   },
   getProductByTypeProduct: async (req, res, next) => {
     const typeProduct = req.query.typeProduct
-    console.log('masuk')
     if(!typeProduct) {
       const error = new createError(400, 'product type cannot be empty ')
       return next(error)

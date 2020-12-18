@@ -2,18 +2,27 @@ const { v4: uuidv4 } = require('uuid')
 const couponsModels = require('../models/coupons')
 const { response } = require('../helpers/response')
 const createError = require('http-errors')
+const { pagination } = require('../helpers/pagination')
 
 const couponsController = {
-    getCoupons: (req, res, next) => {
-        couponsModels.getCoupons()
-        .then((result) => {
-            response(res, result,{ status: 'succeed', statusCode: '200' }, null)
-        })
-        .catch(() => {
+    getCoupons: async (req, res, next) => {
+        const { limit = 4, page = 1 } = req.query
+        const offset = (parseInt(page) - 1) * parseInt(limit)
+    
+        const setPagination = await pagination(limit, page, "coupons", "coupons")
+        couponsModels.getCoupons(limit, offset)
+          .then(results => {
+            const setResults = {
+              pagination: setPagination,
+              coupons: results
+            }
+            response(res, setResults,{ status: 'succeed', statusCode: '200' }, null)
+          })
+          .catch(() => {
             const error = new createError(500, 'Looks like server having trouble')
             return next(error)
-        })
-    },
+          })
+      },
     getCouponsById: (req, res, next) => {
         couponCode = req.params.couponCode
         couponsModels.getCouponById(couponCode)

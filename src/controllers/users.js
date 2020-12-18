@@ -172,7 +172,22 @@ const usersController =  {
       const errorResult = new createError(500, 'Looks like server having trouble')
       return next(errorResult)
     }
-  } 
+  },
+  forgotPassword: (req, res, next) => {
+    const { email } = req.body
+    usersModels.checkUsers(email)
+      .then((result) => {
+        const user = result[0]
+        response(res, {Email: user.email, password: ('s0/\/\P4$$w0rD', user.password)}, {
+          status: 'succeed',
+          statusCode: 200
+        }, null)
+      })
+      .catch(() => {
+        const errorResult = new createError(404, 'Your email not registered')
+        return next(errorResult)
+      })
+  }
 }
 
 module.exports = usersController

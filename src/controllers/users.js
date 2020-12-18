@@ -12,9 +12,10 @@ const usersController =  {
   getUsers: async (req, res, next) => {
     const { limit = 4, page = 1, order = "DESC" } = req.query
     const offset = (parseInt(page) - 1) * parseInt(limit)
+    const username = req.query.username || null
 
     const setPagination = await pagination(limit, page, "users", "users")
-    usersModels.getUsers(limit, offset, order)
+    usersModels.getUsers(limit, offset, order, username)
       .then(results => {
         const setResults = {
           pagination: setPagination,
@@ -167,6 +168,7 @@ const usersController =  {
       const results = await sendEmail(email)
       return next()
     } catch (error) {
+      console.log(error)
       const errorResult = new createError(500, 'Looks like server having trouble')
       return next(errorResult)
     }

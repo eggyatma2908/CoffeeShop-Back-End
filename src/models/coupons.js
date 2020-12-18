@@ -1,8 +1,8 @@
 const { actionQuery } = require('../helpers/actionQuery')
 
 const couponsModels = {
-    getCoupons: () => {
-        return actionQuery(`SELECT * FROM coupons`)
+    getCoupons: (limit, offset) => {
+        return actionQuery(`SELECT couponCode, itemToBuy, amountItemToBuy, itemPromo, percentDiscount, expired FROM coupons LIMIT ${offset},${limit}`)
     },
     getCouponById: (couponCode) => {
         return actionQuery('SELECT * FROM coupons WHERE couponCode = ?', couponCode)

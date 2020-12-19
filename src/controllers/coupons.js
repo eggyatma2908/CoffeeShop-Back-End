@@ -36,10 +36,20 @@ const couponsController = {
     },
     insertCoupons: (req, res, next) => {
         const couponCode = uuidv4()
-        const { itemToBuy, amountItemToBuy, itemPromo, percentDiscount, expired } = req.body
+        const { itemToBuy, amountItemToBuy, itemPromo, description, percentDiscount, expiredStart, expiredEnd, homeDelivery, dineIn, takeAway} = req.body
         
         const data = {
-            couponCode, itemToBuy,amountItemToBuy, itemPromo, percentDiscount, expired
+            couponCode,
+            itemToBuy,
+            amountItemToBuy,
+            itemPromo,
+            description,
+            percentDiscount,
+            expiredStart,
+            expiredEnd,
+            homeDelivery,
+            dineIn,
+            takeAway
         }
         couponsModels.insertCoupons(data)
         .then(() => {
@@ -56,14 +66,20 @@ const couponsController = {
     },
     updateCoupons: (req, res, next) => {
         const couponCode = req.params.couponCode
-        const { itemToBuy, amountItemToBuy, itemPromo, percentDiscount, expired } = req.body
+        const { itemToBuy, amountItemToBuy, itemPromo, description, percentDiscount, expiredStart, expiredEnd, homeDelivery, dineIn, takeAway} = req.body
+
         const data = {
             couponCode,
             itemToBuy,
             amountItemToBuy,
             itemPromo,
+            description,
             percentDiscount,
-            expired
+            expiredStart,
+            expiredEnd,
+            homeDelivery,
+            dineIn,
+            takeAway
         }
         couponsModels.updateCoupons(couponCode, data)
         .then(() => {

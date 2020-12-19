@@ -25,7 +25,7 @@ app.use('/v1/users', usersRoute)
 app.use('/v1/products', productsRoute)
 app.use('/v1/coupons', couponsRoute)
 
-app.use('/upload', express.static('./upload'))
+app.use('/upload', express.static('./uploads'))
 
 // Default Response Unknown End-Point
 app.use('*', (req, res) => {

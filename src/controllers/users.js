@@ -84,7 +84,7 @@ const usersController =  {
       .then((result) => {
           const user = result[0]
           if(parseInt(user.emailVerification) === 0) {
-            const error = new createError(400, 'Email has not been verified')
+            const error = new createError(401, 'Email has not been verified')
             return next(error)
           }
           // compare/verify password

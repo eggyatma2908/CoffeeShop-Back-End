@@ -83,7 +83,10 @@ const usersController =  {
     usersModels.checkUsers(email)
       .then((result) => {
           const user = result[0]
-          
+          if(parseInt(user.emailVerification) === 0) {
+            const error = new createError(400, 'Email has not been verified')
+            return next(error)
+          }
           // compare/verify password
           bcrypt.compare(password, user.password, function (err, resCheck) {
               if (!resCheck) {
@@ -94,7 +97,7 @@ const usersController =  {
               delete user.roleID
               delete user.updatedAt
               delete user.createdAt
-              
+              console.log(user)
           // jsonwebtoken
           // accessToken 
           jwt.sign({ userId: user.id, email: user.email }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '24h' }, function (err, accessToken) {

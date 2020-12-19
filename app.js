@@ -8,6 +8,7 @@ const cors = require('cors')
 const usersRoute = require('./src/routers/users')
 const productsRoute = require('./src/routers/products')
 const couponsRoute = require('./src/routers/coupons')
+const orderRoute = require('./src/routers/historyOrder')
 
 // Using CORS
 app.use(cors())
@@ -24,6 +25,7 @@ app.use(morgan('dev'))
 app.use('/v1/users', usersRoute)
 app.use('/v1/products', productsRoute)
 app.use('/v1/coupons', couponsRoute)
+app.use('/v1/historyOrder', orderRoute)
 
 app.use('/upload', express.static('./uploads'))
 

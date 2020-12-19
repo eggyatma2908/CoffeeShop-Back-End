@@ -13,8 +13,8 @@ router
   .post('/forgotpassword', forgotPassword)
   .post('/register', sendEmailVerification, registerUsers)
   .post('/login', loginUsers)
-  .delete('/:idUser', deleteUser)
-  .patch('/profile/:id', uploadMulter.single('photoProfile'), updateUser)
+  .delete('/:idUser', authenticationToken, authorizationUser, deleteUser)
+  .patch('/profile/:id', authenticationToken, authorizationUser, uploadMulter.single('photoProfile'), updateUser)
   .patch('/password/:id')
 
 module.exports = router

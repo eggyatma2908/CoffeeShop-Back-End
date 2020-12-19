@@ -7,9 +7,9 @@ const authorizationUser = require('../helpers/authorizationUser')
 const authorizationAdmin = require('../helpers/authorizationAdmin')
 
 router
-    .get('/', getHistoryOrder)
-    .get('/:id', getHistoryOrderById)
-    .post('/', insertHistoryOrder)
-    .delete('/:id', deleteHistoryOrder)
+    .get('/', authenticationToken, authorizationUser, getHistoryOrder)
+    .get('/:id', authenticationToken, authorizationUser, getHistoryOrderById)
+    .post('/', authenticationToken, authorizationUser, insertHistoryOrder)
+    .delete('/:id', authenticationToken, authorizationUser, deleteHistoryOrder)
 
 module.exports = router

@@ -63,15 +63,17 @@ const historyOrderController = {
         })
     },
     deleteHistoryOrder: (res, req, next) => {
-        const id = req.params.id
+        let id = req.params
         historyOrderModels.deleteHistoryOrder(id)
-        .then(() => {
+        .then((result) => {
+            const results = result
             response(res, {message: 'Deleted Success'}, {
                 status: 'succeed',
                 statusCode: 200
             }, null)
         })
-        .catch(() => {
+        .catch((err) => {
+            console.log(err)
             const error = new createError(500, `Looks like server having trouble`)
             return next(error)
         })

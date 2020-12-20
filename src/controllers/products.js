@@ -87,6 +87,12 @@ const productsController =  {
   },
   updateProducts: (req, res, next) => {
     const idProduct = req.params.idProduct
+
+    if (Object.keys(req.body).length === 0) {
+      const error = new createError(400, `Forbidden: Nothing to update`)
+      return next(error)
+    }
+  
     const { productName, price, stock, description, discountPercent, idTypeProduct, homeDelivery, dineIn, takeAway } = req.body
     
     const data = {

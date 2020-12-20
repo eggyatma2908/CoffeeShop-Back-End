@@ -66,7 +66,7 @@ var nodemailer = require('nodemailer')
           margin-top: 40px;
         }
     
-        a.btn {
+        .btn {
           display: block;
           margin: 30px auto 0 auto;
           background-color: #6A4029;
@@ -104,7 +104,7 @@ var nodemailer = require('nodemailer')
             quaerat suscipit!</p>
             <hr>
             <p class="desc mt-3">Please click the button below to change the password</p>
-            <a class="email" href="${process.env.BASE_URL_FRONT_END}/forgot-password/${link}" class="btn">Change Password</a>
+            <a href="${process.env.BASE_URL_FRONT_END}/forgot-password/${link}" class="btn">Change Password</a>
             <hr>
           <p class="footer">
             Need help? Contact our support team or hit us up on email <a

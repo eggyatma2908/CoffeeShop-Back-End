@@ -135,18 +135,19 @@ const usersController =  {
   },
   updateUser: (req, res, next) => {
   const id = req.params.id
-  const { email, phoneNumber, gender, username, firstName, lastName, bornDate, address} = req.body
+
+  if (Object.keys(req.body).length === 0) {
+    const error = new createError(400, `Forbidden: Nothing to update`)
+    return next(error)
+  }
+
+  if (req.body.id || req.body.roleId || req.body.emailVerification) {
+    const error = new createError(400, `Forbidden: Cannot change id, roleId, emailVerification`)
+    return next(error)
+  }
 
   const data = {
-    email,
-    phoneNumber,
-    gender,
-    username,
-    firstName,
-    lastName,
-    bornDate,
-    address,
-    photoProfile: `${process.env.BASE_URL}/upload/${req.file.filename}`,
+    ...req.body,
     updatedAt: new Date()
     }
     usersModels.updateUser(id, data)
@@ -161,6 +162,37 @@ const usersController =  {
         console.log(err)
         const error = new createError(500, 'Looks like server having trouble')
         return next(error)
+      })
+    },
+    updatePhotoProfile: (req, res, next) => {
+      const id = req.params.id
+    
+      const { email, phoneNumber, gender, username, firstName, lastName, bornDate, address} = req.body
+      
+      const data = {
+        email,
+        phoneNumber,
+        gender,
+        username,
+        firstName,
+        lastName,
+        bornDate,
+        address,
+        photoProfile: `${process.env.BASE_URL}/upload/${req.file.filename}`,
+        updatedAt: new Date()
+      }
+      usersModels.updateUser(id, data)
+      .then(result => {
+        const resultUser = result
+        response(res, {message: 'Data has been updated'}, {
+          status: 'succeed',
+          statusCode: 200
+          }, null)
+      })
+      .catch(err => {
+          console.log(err)
+          const error = new createError(500, 'Looks like server having trouble')
+          return next(error)
       })
     },
     sendEmailVerification: async (req, res, next) => {
@@ -195,26 +227,7 @@ const usersController =  {
         const errorResult = new createError(404, 'Your email not registered')
         return next(errorResult)
       })
-  },
-  sendEmailForgotPasswordVerification: (req, res, next) => {
-    const email = req.body.email
-    if(!email) {
-      const error = new createError(400, `Forbidden: Email cannot be empty. `)
-      return next(error)
-    }
-
-    usersModels.checkUsers(email)
-      .then((result) => {
-        const user = result[0]
-        const userId = user.id
-        const email = user.email
-        const password = user.password
-
-
-
-        sendEmailForgotPassword(email, userId, password)
-      })
-  },
+  }
 }
 
 module.exports = usersController

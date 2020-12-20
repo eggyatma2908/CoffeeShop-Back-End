@@ -7,7 +7,7 @@ This is a code backend coffeshop project created using nodejs and expressjs, ins
 
 ## Requirements
 * [Node.js](https://nodejs.org/en/)
-* [Postman](https://www.getpostman.com/) for testing
+* [Postman](https://www.getpostman.com/)
 * [Database](coffeeshop.sql)
 
 ## End Point

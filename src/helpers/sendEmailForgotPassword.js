@@ -9,7 +9,7 @@ var nodemailer = require('nodemailer')
     },
   });
 
-  const sendEmail = async (email) =>{
+  const sendEmailForgotPassword = (email, link) =>{
     const emailTemplate = `<!DOCTYPE html>
     <html lang="en">
     
@@ -66,7 +66,7 @@ var nodemailer = require('nodemailer')
           margin-top: 40px;
         }
     
-        .btn {
+        a.btn {
           display: block;
           margin: 30px auto 0 auto;
           background-color: #6A4029;
@@ -102,8 +102,10 @@ var nodemailer = require('nodemailer')
             harum accusantium tenetur praesentium delectus sit? Ipsum officiis hic laborum architecto delectus! Et.</p>
           <p class="desc mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores ducimus, nostrum ea rerum
             quaerat suscipit!</p>
-          <a href="${process.env.BASE_URL_FRONT_END}/emailverification/${email.replace('@gmail.com', '')}" class="btn">Verify email</a >
-          <hr>
+            <hr>
+            <p class="desc mt-3">Please click the button below to change the password</p>
+            <a class="email" href="${process.env.BASE_URL_FRONT_END}/forgot-password/${link}" class="btn">Change Password</a>
+            <hr>
           <p class="footer">
             Need help? Contact our support team or hit us up on email <a
               class="email"href="mailto:${process.env.EMAIL_USERNAME}">click in here</a>
@@ -118,7 +120,7 @@ var nodemailer = require('nodemailer')
       const message = {
         from: process.env.EMAIL_USERNAME, // sender address
         to: email, // list of receivers
-        subject: "Email Verification", // Subject line
+        subject: "Forgot Password Coffe-Shop", // Subject line
         // text: "Hello world?", // plain text body
         html: emailTemplate, // html body
       }
@@ -133,4 +135,4 @@ var nodemailer = require('nodemailer')
     })
   }
 
-module.exports = sendEmail
+module.exports = sendEmailForgotPassword

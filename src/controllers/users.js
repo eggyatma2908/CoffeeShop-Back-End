@@ -2,11 +2,13 @@ const createError = require('http-errors')
 const bcrypt = require('bcrypt')
 const { v4: uuidv4 } = require('uuid')
 const jwt = require('jsonwebtoken')
+const crypto = require('crypto-js/md5')
 
 const usersModels = require('../models/users')
 const { pagination } = require('../helpers/pagination')
 const { response } = require('../helpers/response')
 const sendEmail = require('../helpers/sendEmail')
+const sendEmailForgotPassword = require('../helpers/sendEmailForgotPassword')
 
 const usersController =  {
   getUsers: async (req, res, next) => {
@@ -181,16 +183,38 @@ const usersController =  {
     usersModels.checkUsers(email)
       .then((result) => {
         const user = result[0]
-        response(res, {Email: user.email, password: ('s0/\/\P4$$w0rD', user.password)}, {
+
+        const link = jwt.sign({ userId: user.id, email: user.email }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '1h' })
+        response(res, {message: link}, {
           status: 'succeed',
           statusCode: 200
         }, null)
+        sendEmailForgotPassword(email, link)
       })
       .catch(() => {
         const errorResult = new createError(404, 'Your email not registered')
         return next(errorResult)
       })
-  }
+  },
+  sendEmailForgotPasswordVerification: (req, res, next) => {
+    const email = req.body.email
+    if(!email) {
+      const error = new createError(400, `Forbidden: Email cannot be empty. `)
+      return next(error)
+    }
+
+    usersModels.checkUsers(email)
+      .then((result) => {
+        const user = result[0]
+        const userId = user.id
+        const email = user.email
+        const password = user.password
+
+
+
+        sendEmailForgotPassword(email, userId, password)
+      })
+  },
 }
 
 module.exports = usersController

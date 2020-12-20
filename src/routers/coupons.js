@@ -7,10 +7,10 @@ const authorizationUser = require('../helpers/authorizationUser')
 const authorizationAdmin = require('../helpers/authorizationAdmin')
 
 router
-  .get('/', getCoupons)
-  .get('/:couponCode', getCouponsById)
-  .post('/', insertCoupons)
-  .delete('/:couponCode', deleteCoupons)
-  .patch('/:couponCode', updateCoupons)
+  .get('/', authenticationToken, authorizationUser, getCoupons)
+  .get('/:couponCode', authenticationToken, authorizationUser, getCouponsById)
+  .post('/', authenticationToken, authorizationAdmin, insertCoupons)
+  .delete('/:couponCode', authenticationToken, authorizationAdmin, deleteCoupons)
+  .patch('/:couponCode', authenticationToken, authorizationAdmin, updateCoupons)
 
 module.exports = router

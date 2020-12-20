@@ -125,7 +125,7 @@ const productsController =  {
     }
     const { limit = 4, page = 1, order = "DESC" } = req.query
     const offset = (parseInt(page) - 1) * parseInt(limit)
-    const setPagination = await pagination(limit, page, "products", "products")
+    const setPagination = await pagination(limit, page, "products/typeProduct", "products")
 
     productsModels.getProductByTypeProduct(typeProduct, limit, offset, order) 
     .then(results => {

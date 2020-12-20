@@ -7,8 +7,8 @@ const authorizationUser = require('../helpers/authorizationUser')
 const authorizationAdmin = require('../helpers/authorizationAdmin')
 
 router
-.get('/typeProduct', getProductByTypeProduct)
-.post('/', uploadMulter.single('photoProduct'), insertProducts)
+  .get('/typeProduct', getProductByTypeProduct)
+  .post('/', uploadMulter.single('photoProduct'), insertProducts)
   .get('/', getProducts)
   .get('/:idProduct', getProductById)
   .delete('/:idProduct', deleteProducts)

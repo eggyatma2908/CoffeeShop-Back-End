@@ -3,13 +3,13 @@ const { actionQuery } = require('../helpers/actionQuery')
 const productsModels = {
   getProducts: (limit, offset, order, productName) => {
     if (!productName) {
-      return actionQuery(`SELECT idProduct, productName, price, stock, photoProduct, description, discountPercent, idTypeProduct, homeDelivery, dineIn, takeAway FROM products ORDER BY productName ${order} LIMIT ${offset},${limit}`)
+      return actionQuery(`SELECT idProduct, productName, price, stock, photoProduct, description, discountPercent, idTypeProduct, homeDelivery, dineIn, takeAway, deliveryHourStart, deliveryHourEnd FROM products ORDER BY productName ${order} LIMIT ${offset},${limit}`)
     } else {
-      return actionQuery(`SELECT idProduct, productName, price, stock, photoProduct, description, discountPercent, idTypeProduct, homeDelivery, dineIn, takeAway FROM products WHERE productName LIKE ?`, `%${productName}%`)
+      return actionQuery(`SELECT idProduct, productName, price, stock, photoProduct, description, discountPercent, idTypeProduct, homeDelivery, dineIn, takeAway, deliveryHourStart, deliveryHourEnd FROM products WHERE productName LIKE ?`, `%${productName}%`)
     }
   },
   getProductById: (idProduct) => {
-    return actionQuery('SELECT idProduct, productName, price, stock, photoProduct, description, discountPercent, idTypeProduct, homeDelivery, dineIn, takeAway FROM products WHERE idProduct = ?', idProduct)
+    return actionQuery('SELECT idProduct, productName, price, stock, photoProduct, description, discountPercent, idTypeProduct, homeDelivery, dineIn, takeAway, deliveryHourStart, deliveryHourEnd FROM products WHERE idProduct = ?', idProduct)
   },
   insertProducts: (data) => {
       return actionQuery(`INSERT INTO products SET ?`, data)

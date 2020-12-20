@@ -45,7 +45,7 @@ const productsController =  {
   },
   insertProducts: (req, res, next) => {
     const idProduct = uuidv4()
-    const { productName, price, stock, description, discountPercent, idTypeProduct, homeDelivery, dineIn, takeAway } = req.body
+    const { productName, price, stock, description, discountPercent, idTypeProduct, homeDelivery, dineIn, takeAway, deliveryHourStart, deliveryHourEnd } = req.body
     const data = {
       idProduct,
       productName,
@@ -57,7 +57,9 @@ const productsController =  {
       idTypeProduct,
       homeDelivery,
       dineIn,
-      takeAway
+      takeAway,
+      deliveryHourStart,
+      deliveryHourEnd
     }
     productsModels.insertProducts(data)
       .then(() => {

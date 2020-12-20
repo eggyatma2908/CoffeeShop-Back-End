@@ -10,6 +10,9 @@ const productsRoute = require('./src/routers/products')
 const couponsRoute = require('./src/routers/coupons')
 const orderRoute = require('./src/routers/historyOrder')
 
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
+const stripe = require('stripe')(stripeSecretKey)
 // Using CORS
 app.use(cors())
 
@@ -26,6 +29,26 @@ app.use('/v1/users', usersRoute)
 app.use('/v1/products', productsRoute)
 app.use('/v1/coupons', couponsRoute)
 app.use('/v1/historyOrder', orderRoute)
+
+// stripe payment
+app.post('/v1/purchase', function(req, res) {
+    const { amount, source, description, amountToIDR } = req.body
+    console.log(req.body)
+    console.log(source)
+    stripe.charges.create({
+        amount: amount,
+        source: source,
+        currency: 'usd',
+        description: JSON.stringify(description)
+      }).then(function() {
+        console.log('Charge Successful')
+        res.json({ message: 'Successfully purchased items' })
+      }).catch(function(error) {
+          console.log(error)
+        console.log('Charge Fail')
+        res.status(500).end()
+      })
+})
 
 app.use('/upload', express.static('./uploads'))
 

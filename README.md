@@ -10,12 +10,6 @@ This is a code backend coffeshop project created using nodejs and expressjs, ins
 * [Postman](https://www.getpostman.com/)
 * [Database](coffeeshop.sql)
 
-## End Point
-* 
-*
-*
-*
-
 ## Installation
 ```bash
 git clone https://github.com/Gefyaqiilah/CoffeeShop-Back-End.git

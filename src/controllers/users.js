@@ -245,6 +245,9 @@ const usersController =  {
         const errorResult = new createError(404, 'Your email not registered')
         return next(errorResult)
       })
+  },
+  emailVerification: (req, res, next) => {
+    const email = req.body.email
   }
 }
 

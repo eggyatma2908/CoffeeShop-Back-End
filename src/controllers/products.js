@@ -53,7 +53,6 @@ const productsController =  {
       stock,
       photoProduct: `${process.env.BASE_URL}/upload/${req.file.filename}`,
       description,
-      discountPercent,
       idTypeProduct,
       homeDelivery,
       dineIn,

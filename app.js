@@ -33,8 +33,6 @@ app.use('/v1/historyOrder', orderRoute)
 // stripe payment
 app.post('/v1/purchase', function(req, res) {
     const { amount, source, description, amountToIDR } = req.body
-    console.log(req.body)
-    console.log(source)
     stripe.charges.create({
         amount: amount,
         source: source,

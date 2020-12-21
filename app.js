@@ -8,8 +8,9 @@ const cors = require('cors')
 const usersRoute = require('./src/routers/users')
 const productsRoute = require('./src/routers/products')
 const couponsRoute = require('./src/routers/coupons')
-const orderRoute = require('./src/routers/historyOrder')
+const orderRoute = require('./src/routers/orders')
 const emailRoute = require('./src/routers/email')
+const cartRoute = require('./src/routers/carts')
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
@@ -29,8 +30,9 @@ app.use(morgan('dev'))
 app.use('/v1/users', usersRoute)
 app.use('/v1/products', productsRoute)
 app.use('/v1/coupons', couponsRoute)
-app.use('/v1/historyOrder', orderRoute)
+app.use('/v1/order', orderRoute)
 app.use('/v1/emailVerification', emailRoute)
+app.use('/v1/cart', cartRoute)
 
 // stripe payment
 app.post('/v1/purchase', function(req, res) {

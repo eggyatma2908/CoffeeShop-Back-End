@@ -85,6 +85,10 @@ const usersController =  {
     usersModels.checkUsers(email)
       .then((result) => {
           const user = result[0]
+          if(result.length===0){
+            const error = new createError(401, 'Email or Password Wrong')
+            return next(error)      
+           }
           if(parseInt(user.emailVerification) === 0) {
             const error = new createError(401, 'Email has not been verified')
             return next(error)
@@ -177,6 +181,20 @@ const usersController =  {
       const errorResult = new createError(500, 'Looks like server having trouble')
       return next(errorResult)
     }
+  },
+  getRoleId: (req, res, next) => {
+    const { id } = req.params
+    console.log(id)
+    usersModels.searchRoleId(id)
+    .then(result => {
+      response(res, result[0], {
+        status: 'succeed',
+        statusCode: 200
+      }, null)
+    })
+    .catch(error => {
+
+    })
   },
   forgotPassword: (req, res, next) => {
     const { email } = req.body

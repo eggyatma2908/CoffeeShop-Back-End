@@ -8,7 +8,7 @@ const authorizationAdmin = require('../helpers/authorizationAdmin')
 
 router
   .get('/typeProduct', authenticationToken, authorizationUser, getProductByTypeProduct)
-  .post('/', authenticationToken, authorizationAdmin, uploadMulter.single('photoProduct'), insertProducts)
+  .post('/', authenticationToken, authorizationUser, uploadMulter.single('photoProduct'), insertProducts)
   .get('/', authenticationToken, authorizationUser, getProducts)
   .get('/:idProduct', authenticationToken, authorizationUser, getProductById)
   .delete('/:idProduct', authenticationToken, authorizationAdmin, deleteProducts)

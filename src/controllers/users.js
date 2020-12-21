@@ -137,38 +137,7 @@ const usersController =  {
     return next(error)
   })
   },
-  updateUser: (req, res, next) => {
-  const id = req.params.id
-
-  if (Object.keys(req.body).length === 0) {
-    const error = new createError(400, `Forbidden: Nothing to update`)
-    return next(error)
-  }
-
-  if (req.body.id || req.body.roleId || req.body.emailVerification) {
-    const error = new createError(400, `Forbidden: Cannot change id, roleId, emailVerification`)
-    return next(error)
-  }
-
-  const data = {
-    ...req.body,
-    updatedAt: new Date()
-    }
-    usersModels.updateUser(id, data)
-      .then(result => {
-        const resultUser = result
-        response(res, {message: 'Data has been updated'}, {
-          status: 'succeed',
-          statusCode: 200
-        }, null)
-      })
-      .catch(err => {
-        console.log(err)
-        const error = new createError(500, 'Looks like server having trouble')
-        return next(error)
-      })
-    },
-    updatePhotoProfile: (req, res, next) => {
+    updateUser: (req, res, next) => {
       const id = req.params.id
     
       const { email, phoneNumber, gender, username, firstName, lastName, bornDate, address} = req.body

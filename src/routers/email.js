@@ -1,7 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const { emailVerification, checkIfEmailVerified } = require('../controllers/email')
+const emailController = require('../controllers/email')
+const sendEmail = require('../helpers/sendEmail')
+const {emailVerification,sendEmailVerification,checkIfEmailVerified} = emailController
+
 router
+.post('/sendemailverification',sendEmailVerification)
 .patch('/emailverification',emailVerification)
 .get('/checkEmailVerified',checkIfEmailVerified)
 module.exports = router

@@ -1,10 +1,33 @@
 const createError = require('http-errors')
 const sendEmail = require('../helpers/sendEmail')
-const emailModel = require('../models/emailModel')
-const responseHelpers = require('../helpers/responseHelpers')
+const emailModel = require('../models/email')
+const { response } = require('../helpers/response')
 
-const emailControllers = {
-  emailVerification: (req, res, next) => {
+class Controller {
+
+  sendEmailVerification(req, res, next) {
+    const email = req.body.email
+    // const name = req.body.name
+    if (!email) {
+      const error = new createError(404, 'Forbidden: message and email cannot be empty')
+      return next(error)
+    }
+
+    sendEmail(email)
+      .then(() => {
+        const results = { message: "successfully sent the verification email" }
+        response(res, results, {
+          status: 'succeed',
+          statusCode: 200
+        }, null)
+      })
+      .catch(() => {
+        const error = new createError(500, 'Looks like server having trouble..')
+        return next(error)
+      })
+  }
+
+  emailVerification(req, res, next) {
     const email = req.body.email
     if (!email) {
       const error = new createError(400, 'email cannot empty')
@@ -12,15 +35,15 @@ const emailControllers = {
     }
     emailModel.checkEmailStatus(email)
       .then(results => {
-        const emailStatus = results[0].emailStatus
-        if (emailStatus === 1) {
+        const emailVerification = results[0].emailVerification
+        if (emailVerification === 1) {
           const error = new createError(404, 'Forbidden')
           return next(error)
-        } else if (emailStatus === 0) {
+        } else if (emailVerification === 0) {
           emailModel.emailVerification(email)
             .then(exist => {
               const message = { message: 'your email was successfully verified' }
-              return responseHelpers.response(res, message, { status: 'Succeedd', statusCode: 200 }, null)
+              response(res, message, { status: 'Succeedd', statusCode: 200 }, null)
             })
             .catch(() => {
               const error = new createError(500, 'Looks like server having trouble')
@@ -32,8 +55,9 @@ const emailControllers = {
         const error = new createError(500, 'Looks like server having trouble..')
         return next(error)
       })
-  },
-   checkIfEmailVerified: (req, res, next) => {
+  }
+
+  checkIfEmailVerified(req, res, next) {
     const email = req.headers.email
     emailModel.checkEmailStatus(email)
       .then(results => {
@@ -46,7 +70,7 @@ const emailControllers = {
           return next(error)
         }
         const message = { message: 'your account can be verified' }
-        return responseHelpers.response(res, message, { status: 'Succeedd', statusCode: 200 }, null)
+        response(res, message, { status: 'Succeedd', statusCode: 200 }, null)
       })
       .catch(() => {
         const error = new createError(500, 'Looks like server having trouble..')
@@ -54,4 +78,5 @@ const emailControllers = {
       })
   }
 }
-module.exports = emailControllers
+const Email = new Controller()
+module.exports = Email

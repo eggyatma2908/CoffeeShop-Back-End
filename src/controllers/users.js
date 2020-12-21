@@ -170,9 +170,9 @@ const usersController =  {
     },
     updatePhotoProfile: (req, res, next) => {
       const id = req.params.id
+      console.log(req.body.email)
     
       const { email, phoneNumber, gender, username, firstName, lastName, bornDate, address} = req.body
-      
       const data = {
         email,
         phoneNumber,

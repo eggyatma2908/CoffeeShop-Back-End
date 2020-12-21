@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { uploadMulter } = require('../middleware/upload')
 
-const { getUsers, getUserById, registerUsers, loginUsers, sendEmailVerification, getRoleId , sendEmailForgotPasswordVerification, deleteUser, updateUser, forgotPassword  } = require('../controllers/users')
+const { getUsers, getUserById, registerUsers, loginUsers, sendEmailVerification, getRoleId, deleteUser, updateUser, forgotPassword  } = require('../controllers/users')
 const authenticationToken = require('../helpers/authenticationToken')
 const authorizationUser = require('../helpers/authorizationUser')
 const authorizationAdmin = require('../helpers/authorizationAdmin')

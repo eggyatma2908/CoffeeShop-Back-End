@@ -7,10 +7,10 @@ const authorizationUser = require('../helpers/authorizationUser')
 const authorizationAdmin = require('../helpers/authorizationAdmin')
 
 router
-    .get('/', getCart)
-    .get('/:id', getCartById)
-    .post('/', insertCart)
-    .delete('/:id', deleteCart)
-    .patch('/:id', updateCart)
+.get('/', getCart)
+.get('/:id', getCartById)
+.post('/', insertCart)
+.delete('/:id', deleteCart)
+.patch('/:id', updateCart)
 
 module.exports = router

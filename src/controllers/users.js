@@ -32,6 +32,7 @@ const usersController =  {
   },
   getUserById: async (req, res, next) => {
     const { idUser } = req.params
+    console.log(idUser)
     if(!idUser){
       const error = new createError(400, 'Id user cannot be empty')
       return next(error)

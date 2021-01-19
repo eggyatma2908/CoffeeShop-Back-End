@@ -14,7 +14,10 @@ const cartModels = {
         return actionQuery(`DELETE FROM cart WHERE id = ?`, idCart)
     },
     updateCart: (id) => {
-        return actionQuery(`UPDATE cart SET status = 1 WHERE id = ?`, id)
+        return actionQuery(`UPDATE cart SET deliveryStatus = 'delivered' WHERE id = ?`, id)
+    },
+    getCartByIdUser: (id) => {
+        return actionQuery(`SELECT * FROM cart WHERE userId = ?`, id)
     }
 }
 

@@ -11,6 +11,7 @@ const couponsRoute = require('./src/routers/coupons')
 const orderRoute = require('./src/routers/orders')
 const emailRoute = require('./src/routers/email')
 const cartRoute = require('./src/routers/carts')
+const historyRoute = require('./src/routers/history')
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
@@ -33,6 +34,7 @@ app.use('/v1/coupons', couponsRoute)
 app.use('/v1/order', orderRoute)
 app.use('/v1/emailVerification', emailRoute)
 app.use('/v1/cart', cartRoute)
+app.use('/v1/history', historyRoute)
 
 // stripe payment
 app.post('/v1/purchase', function(req, res) {

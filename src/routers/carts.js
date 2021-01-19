@@ -1,16 +1,17 @@
 const express = require('express')
 const router = express.Router()
 
-const { getCart, getCartById, insertCart, deleteCart, updateCart } = require('../controllers/carts')
+const { getCart, getCartById, insertCart, deleteCart, updateCart, getCartByIdUser } = require('../controllers/carts')
 const authenticationToken = require('../helpers/authenticationToken')
 const authorizationUser = require('../helpers/authorizationUser')
 const authorizationAdmin = require('../helpers/authorizationAdmin')
 
 router
-.get('/', getCart)
-.get('/:id', getCartById)
-.post('/', insertCart)
-.delete('/:id', deleteCart)
-.patch('/:id', updateCart)
+.get('/',authenticationToken, getCart)
+.get('/:id',authenticationToken, getCartById)
+.get('/searchbyiduser/:id',authenticationToken, getCartByIdUser)
+.post('/',authenticationToken, insertCart)
+.delete('/:id',authenticationToken, deleteCart)
+.patch('/:id',authenticationToken, updateCart)
 
 module.exports = router

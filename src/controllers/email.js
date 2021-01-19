@@ -59,13 +59,16 @@ class Controller {
 
   checkIfEmailVerified(req, res, next) {
     const email = req.headers.email
+    console.log('email', email)
     emailModel.checkEmailStatus(email)
       .then(results => {
+        console.log('results', results)
         if (results[0].length === 0) {
           const error = new createError(404, 'Forbidden: You are not user')
           return next(error)
         }
-        if (results[0].emailStatus === 1) {
+        if (results[0].emailVerification === 1) {
+          console.log('ini udah diverifikasi  ')
           const error = new createError(404, 'Forbidden: Your account has been verified')
           return next(error)
         }

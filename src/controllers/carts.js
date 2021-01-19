@@ -45,10 +45,8 @@ const cartController = {
         })
     },
     insertCart: (req, res, next) => {
-        const id = uuidv4()
-
-        const { userId, subTotal, tax, shipping, paymentMethod, deliveryMethod, status } = req.body
-        const dataCart = { id, userId, subTotal, tax, shipping, paymentMethod, deliveryMethod, status }
+        const {id, userId, payTotal, paymentMethod, deliveryMethod } = req.body
+        const dataCart = { id, userId, payTotal, paymentMethod, deliveryMethod, deliveryStatus: 'pending'}
         cartModels.insertCart(dataCart)
         .then(() => {
             response(res, {message: 'Product added successfully'}, {
@@ -82,7 +80,6 @@ const cartController = {
         let id = req.params.id
         cartModels.updateCart(id)
         .then((result) => {
-            const results = result
             response(res, {message: 'Status has been updated'}, {
                 status: 'succeed',
                 statusCode: 200
@@ -93,6 +90,30 @@ const cartController = {
             const error = new createError(500, `Looks like server having trouble`)
             return next(error)
         })
+    },
+    getCartByIdUser: (req, res, next) => {
+        const id = req.params.id
+        if(!id) {
+            const error = new createError(400, 'id user cannot empty')
+            next(error)
+        }
+        cartModels.getCartByIdUser(id)
+        .then(results => {
+            if(results.length < 1) {
+                response(res, 'Cart not found', {
+                    status: 'succeed',
+                    statusCode: 200
+                }, null)
+              }
+            response(res, results[0], {
+                status: 'succeed',
+                statusCode: 200
+            }, null)
+        })
+        .catch(() => {
+            const error = new createError(500, `Looks like server having trouble`)
+            return next(error)
+       })
     }
 }
 

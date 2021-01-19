@@ -43,21 +43,34 @@ const ordersController =  {
     })
   },
   insertOrder: (req, res, next) => {
-    const id = uuidv4()
-    const { cartId, productId, productSize, price, amount } = req.body
-    const data = { id, cartId, productId, productSize, price, amount }
-    ordersModels.insertOrder(data)
-      .then(() => {
-        response(res, {message: 'Product added successfully'}, {
-          status: 'succeed',
-          statusCode: 200
-        }, null)
-      })
-      .catch((err) => {
-        console.log(err)
-        const error = new createError(500, `Looks like server having trouble`)
-        return next(error)
-      })
+    // const id = uuidv4()
+    // const { cartId, productId, productSize, price, amount } = req.body
+    // const data = { id, cartId, productId, productSize, price, amount }
+    console.log('req.body', req.body)
+    const { cartId, item } = req.body
+    item.forEach(async (el)=> {
+      const dataSend = {
+        cartId,
+        ...el
+      } 
+      const result = await ordersModels.insertOrder(dataSend)
+    })
+    response(res, {message: 'Product added successfully'}, {
+      status: 'succeed',
+      statusCode: 200
+    }, null)
+    // ordersModels.insertOrder(data)
+    //   .then(() => {
+        // response(res, {message: 'Product added successfully'}, {
+        //   status: 'succeed',
+        //   statusCode: 200
+        // }, null)
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //     const error = new createError(500, `Looks like server having trouble`)
+    //     return next(error)
+    //   })
   },
   deleteOrder: (req, res, next) => {
     const idOrder = req.params.id

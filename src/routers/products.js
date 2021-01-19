@@ -7,10 +7,10 @@ const authorizationUser = require('../helpers/authorizationUser')
 const authorizationAdmin = require('../helpers/authorizationAdmin')
 
 router
-  .get('/typeProduct', authenticationToken, authorizationUser, getProductByTypeProduct)
+  .get('/typeProduct', authenticationToken, getProductByTypeProduct)
   .post('/', authenticationToken, authorizationAdmin, uploadMulter.single('photoProduct'), insertProducts)
-  .get('/', authenticationToken, authorizationUser, getProducts)
-  .get('/:idProduct', authenticationToken, authorizationUser, getProductById)
+  .get('/', authenticationToken, getProducts)
+  .get('/:idProduct', authenticationToken, getProductById)
   .delete('/:idProduct', authenticationToken, authorizationAdmin, deleteProducts)
   .patch('/:idProduct', authenticationToken, authorizationAdmin, uploadMulter.single('photoProduct'), updateProducts)
 

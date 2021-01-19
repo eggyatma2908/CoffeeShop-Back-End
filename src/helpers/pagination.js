@@ -1,8 +1,13 @@
 const { countAmountDataUsers } = require('../models/users')
 
-exports.pagination = async (limit, page, endpoint, table) => {
+exports.pagination = async (limit, page, endpoint, table, totalTypeProduct) => {
   const users = await countAmountDataUsers(table)
-  const totalData = users[0].totalData
+  console.log('totalTypeProduct', totalTypeProduct)
+  let totalData = users[0].totalData
+  if (endpoint === 'products/typeProduct') {
+    totalData = totalTypeProduct
+  }
+  
   const totalPage = Math.ceil(totalData / limit)
   const setPagination = {
     totalData: totalData,

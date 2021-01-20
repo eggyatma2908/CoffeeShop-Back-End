@@ -4,7 +4,7 @@ exports.pagination = async (limit, page, endpoint, table, totalTypeProduct) => {
   const users = await countAmountDataUsers(table)
   console.log('totalTypeProduct', totalTypeProduct)
   let totalData = users[0].totalData
-  if (endpoint === 'products/typeProduct') {
+  if (totalTypeProduct) {
     totalData = totalTypeProduct
   }
   

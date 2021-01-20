@@ -1,8 +1,14 @@
 const { actionQuery } = require('../helpers/actionQuery')
 
 const cartModels = {
-    getCart: (limit, offset) => {
-        return actionQuery(`SELECT id, userId, subTotal, tax, shipping, paymentMethod, deliveryMethod, status FROM cart LIMIT ${offset},${limit}`)
+    getCart: (limit, offset, where) => {
+        if (where === 'all') {
+            return actionQuery(`SELECT * FROM cart LIMIT ${offset},${limit}`)
+        } else if (where === 'pending') {
+            return actionQuery('SELECT * FROM cart WHERE deliveryStatus = "pending"')
+        } else if (where === 'delivered') {
+            return actionQuery('SELECT * FROM cart WHERE deliveryStatus = "delivered"')
+        }
     },
     getCartById: (id) => {
         return actionQuery('SELECT * FROM cart WHERE id = ?', id)

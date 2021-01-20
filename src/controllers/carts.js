@@ -6,19 +6,29 @@ const { pagination } = require('../helpers/pagination')
 
 const cartController = {
     getCart: async (req, res, next) => {
-        const { limit = 4, page = 1 } = req.query
+        const { limit = 4, page = 1, where = "all" } = req.query
         const offset = (parseInt(page) - 1) * parseInt(limit)
     
-        const setPagination = await pagination(limit, page, "cart", "cart")
-        cartModels.getCart(limit, offset)
-        .then(results => {
-            const setResults = {
-                pagination: setPagination,
-                HistoryOrder: results
+        cartModels.getCart(limit, offset, where)
+        .then(async(results) => {
+            let setResults = null
+            if (where === 'all') {
+                const setPagination = await pagination(limit, page, "cart", "cart")
+                setResults = {
+                    pagination: setPagination,
+                    HistoryOrder: results
+                }
+            } else {
+                const setPagination = await pagination(limit, page, "cart", "cart", results.length)
+                setResults = {
+                    pagination: setPagination,
+                    HistoryOrder: results
+                }
             }
             response(res, setResults,{ status: 'succeed', statusCode: '200' }, null)
         })
-        .catch(() => {
+        .catch((err) => {
+            console.log('err', err)
             const error = new createError(500, 'Looks like server having trouble')
             return next(error)
         })

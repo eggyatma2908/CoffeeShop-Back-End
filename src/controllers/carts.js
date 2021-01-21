@@ -1,5 +1,7 @@
 const { v4: uuidv4 } = require('uuid')
-const cartModels = require('../models/carts')
+const cartModels = require('../models/carts') 
+const orderModels = require('../models/orders')
+const userModels = require('../models/users')
 const { response } = require('../helpers/response')
 const createError = require('http-errors')
 const { pagination } = require('../helpers/pagination')
@@ -16,13 +18,13 @@ const cartController = {
                 const setPagination = await pagination(limit, page, "cart", "cart")
                 setResults = {
                     pagination: setPagination,
-                    HistoryOrder: results
+                    cart: results
                 }
             } else {
                 const setPagination = await pagination(limit, page, "cart", "cart", results.length)
                 setResults = {
                     pagination: setPagination,
-                    HistoryOrder: results
+                    cart: results
                 }
             }
             response(res, setResults,{ status: 'succeed', statusCode: '200' }, null)
@@ -32,6 +34,30 @@ const cartController = {
             const error = new createError(500, 'Looks like server having trouble')
             return next(error)
         })
+    },
+    getCartAndOrder: async (req, res, next) => {
+        try {
+            const resultCart = await cartModels.getCart('', '', 'allpendingnopagination')
+            const resultWithOrder = await Promise.all(resultCart.map(async(el)=> {
+                const order = await orderModels.getOrderByCartId(el.id)
+                const data = {
+                    cart: el,
+                    listOrder: order
+                }
+                return data
+            }))
+            const resultWithUserData = await Promise.all(resultWithOrder.map(async(el)=> {
+                const user = await userModels.getUserById(el.cart.userId)
+                const data = {
+                    ...el,
+                    user: user[0]
+                }
+                return data
+            }))
+            response(res, resultWithUserData, { status:'success', statusCode: 200 }, null)
+        } catch (error) {
+            next(createError('500', 'Looks like server having trouble'))
+        }
     },
     getCartById: async (req, res, next) => {
         const { id } = req.params

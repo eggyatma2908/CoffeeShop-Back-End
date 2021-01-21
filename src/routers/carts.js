@@ -1,13 +1,14 @@
 const express = require('express')
 const router = express.Router()
 
-const { getCart, getCartById, insertCart, deleteCart, updateCart, getCartByIdUser } = require('../controllers/carts')
+const { getCart, getCartById, insertCart, deleteCart, getCartAndOrder, updateCart, getCartByIdUser } = require('../controllers/carts')
 const authenticationToken = require('../helpers/authenticationToken')
 const authorizationUser = require('../helpers/authorizationUser')
 const authorizationAdmin = require('../helpers/authorizationAdmin')
 
 router
 .get('/',authenticationToken, getCart)
+.get('/cart-and-order', getCartAndOrder)
 .get('/:id',authenticationToken, getCartById)
 .get('/searchbyiduser/:id',authenticationToken, getCartByIdUser)
 .post('/',authenticationToken, insertCart)

@@ -7,6 +7,9 @@ const ordersModels = {
     getOrderById: (id) => {
         return actionQuery('SELECT * FROM orderhistory WHERE id = ?', id)
     },
+    getOrderByCartId: (id) => {
+        return actionQuery('SELECT * FROM orderhistory WHERE cartId = ?', id)
+    },
     insertOrder: (data) => {
         return actionQuery('INSERT INTO orderhistory SET ?', data)
     },

@@ -155,6 +155,7 @@ const usersController =  {
         photoProfile: `${process.env.BASE_URL}/upload/${req.file.filename}`,
         updatedAt: new Date()
       }
+      console.log('data', data)
       usersModels.updateUser(id, data)
       .then(result => {
         const resultUser = result
@@ -164,7 +165,7 @@ const usersController =  {
           }, null)
       })
       .catch(err => {
-          console.log(err)
+          console.log('ini error sql',err)
           const error = new createError(500, 'Looks like server having trouble')
           return next(error)
       })

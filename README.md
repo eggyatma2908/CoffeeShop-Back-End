@@ -1,6 +1,20 @@
-# CoffeeShop-Back-End
-This is a code backend coffeshop project created using nodejs and expressjs, inside it has several endpoints such as users, products, coupons and historyorder.
+<p align="center">
+  <a href="https://github.com/Gefyaqiilah/Zwallet-Front-End">
+    <img src="./screenshots/logo.png"  width="100px" alt="Logo" width="80">
+  </a>
 
+  <p align="center">
+   Zwallet-Backend for Zwallet application. Built with NodeJs using the ExpressJs Framework.
+      Express.js is a web application framework for Node.js.
+    <br />
+  <br/>
+    <a href="https://zwallet-gefy.netlify.app">View Demo</a>
+    ·
+    <a href="https://github.com/Gefyaqiilah/Zwallet-Front-End">Report Bug</a>
+    ·
+    <a href="https://github.com/Gefyaqiilah/Zwallet-Front-End">Request Feature</a>
+  </p>
+  
 ## Built With
 * [Node.js](https://nodejs.org/en/)
 * [Express.js](https://expressjs.com/)

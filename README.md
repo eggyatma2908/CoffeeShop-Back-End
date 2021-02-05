@@ -2,7 +2,7 @@
   <a href="https://github.com/Gefyaqiilah/Zwallet-Front-End">
     <img src="./screenshots/logo.png"  width="100px" alt="Logo" width="80">
   </a>
-
+<h1 align="center">CoffeeShop</h1>
   <p align="center">
    Zwallet-Backend for Zwallet application. Built with NodeJs using the ExpressJs Framework.
       Express.js is a web application framework for Node.js.

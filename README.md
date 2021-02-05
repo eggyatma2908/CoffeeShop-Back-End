@@ -34,9 +34,9 @@
 5. Create a database with the name **coffeeshop** then  import file **coffeeshop.sql** in directory root/database to [phpmyadmin](http://localhost/phpmyadmin)
 6. Open Postman desktop application or Chrome web app extension that has installed before
 7. Choose HTTP Method and enter request url.
-8. You can see all the end point [here](#end-point)
+8. You can see all the end point [here](#rest-api)
 
-## Setup .ENV file
+## Set up .env file
 Create .env file in your root project folder.<br>
 ```bash
 PORT = YOUR_SERVER_PORT

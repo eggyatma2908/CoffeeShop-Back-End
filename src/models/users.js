@@ -24,7 +24,8 @@ const usersModels = {
     return actionQuery('DELETE FROM users WHERE id = ?', idUser)
   },
   updateUser: (id, data) => {
-    return actionQuery(`UPDATE users SET email = '${data.email}', phoneNumber = '${data.phoneNumber}', gender = '${data.gender}', username = '${data.username}', firstName = '${data.firstName}', lastName = '${data.lastName}', bornDate = '${data.bornDate}', address = ?, photoProfile = '${data.photoProfile}', updatedAt = ? WHERE id = ?`, [data.address, id, data.updatedAt])
+    return actionQuery(`UPDATE users SET email = ?, phoneNumber = ?, gender = ?, username = ?, firstName = ?, lastName = ?, bornDate = ?, address = ?, photoProfile = ?, updatedAt = ? WHERE id = ?`,
+     [data.email, data.phoneNumber, data.gender, data.username, data.firstName, data.lastName, data.bornDate, data.address, data.photoProfile, data.updateAt, id])
   },
   searchRoleId: (userId) => {
     return actionQuery('SELECT roleId FROM users WHERE id = ? ', userId)

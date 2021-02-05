@@ -34,7 +34,7 @@
 5. Create a database with the name **coffeeshop** then  import file **coffeeshop.sql** in directory root/database to [phpmyadmin](http://localhost/phpmyadmin)
 6. Open Postman desktop application or Chrome web app extension that has installed before
 7. Choose HTTP Method and enter request url.
-8. You can see all the end point [here](#rest-api)
+8. You can see all the end point in postman collection [here](#rest-api)
 
 ## Set up .env file
 Create .env file in your root project folder.<br>
@@ -60,9 +60,47 @@ STRIPE_SECRET_KEY = YOUR_STRIPE_SECRET_KEY
 You can view my Postman collection </br>
 [![run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/2192875accb7d2886d73)
 
-## Author
-This project was built by :
-* [Gefy Aqiilah Aqsal](https://github.com/Gefyaqiilah)
-* [Eggy Atma Riansyah](https://github.com/eggyatma2908)
-* [Shaula Jaminetya Saga](https://github.com/sjasminetya)
-* [Renaldi Pratama Tumanggor](https://github.com/renaldipratama97)
+## Contributing
+
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## Related Project
+* [`CoffeeShop Front-End`](https://github.com/Gefyaqiilah/CoffeeShop-Front-End)
+
+## Contributors
+<center>
+  <table>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/Gefyaqiilah">
+          <img width="150" src="https://avatars.githubusercontent.com/u/54069791?s=400&u=d52c9220de7f217fab6be5eed1a2f237325ef741&v=4" alt="Gefy Aqiilah Aqshal"><br/>
+          <b>Gefy Aqiilah Aqshal</b>
+        </a>
+      </td>
+       <td align="center">
+        <a href="https://github.com/renaldipratama97">
+          <img width="150" src="https://avatars.githubusercontent.com/u/72293996?v=4" alt="Renaldi Pratama Tumanggor"><br/>
+          <b>Renaldi Pratama Tumanggor</b>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/sjasminetya">
+          <img width="150" src="https://avatars.githubusercontent.com/u/36390515?v=4" alt="Shaula Jasminetya Saga"><br/>
+          <b>Shaula Jasminetya Saga</b>
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/eggyatma2908">
+          <img width="150" src="https://avatars.githubusercontent.com/u/26200397?v=4" alt="Eggy Atma"><br/>
+          <b>Eggy Atma</b>
+        </a>
+      </td>
+    </tr>
+  </table>
+</center>

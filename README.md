@@ -58,7 +58,7 @@ STRIPE_SECRET_KEY = YOUR_STRIPE_SECRET_KEY
 
 ## Rest API
 You can view my Postman collection </br>
-[![run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/2192875accb7d2886d73)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/abc8b64994ea84f3de6a)
 
 ## Contributing
 

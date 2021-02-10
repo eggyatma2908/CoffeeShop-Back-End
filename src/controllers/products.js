@@ -57,6 +57,7 @@ const productsController =  {
       description,
       idTypeProduct,
       homeDelivery,
+      discountPercent,
       dineIn,
       takeAway,
       deliveryHourStart,

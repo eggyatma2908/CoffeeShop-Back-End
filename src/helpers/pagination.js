@@ -7,7 +7,7 @@ exports.pagination = async (limit, page, endpoint, table, totalTypeProduct) => {
   if (totalTypeProduct) {
     totalData = totalTypeProduct
   }
-  
+
   const totalPage = Math.ceil(totalData / limit)
   const setPagination = {
     totalData: totalData,
@@ -15,7 +15,7 @@ exports.pagination = async (limit, page, endpoint, table, totalTypeProduct) => {
     currentPage: page,
     perPage: limit,
     prevPage: page > 1 ? `${process.env.BASE_URL}/v1/${endpoint}?page=${parseInt(page) - 1}&limit=${limit}` : null,
-    nextPage: page < totalPage ? `${process.env.BASE_URL}/v1/${endpoint}?page=${parseInt(page) + 1}&limit=${limit}` : null,
+    nextPage: page <= totalPage ? `${process.env.BASE_URL}/v1/${endpoint}?page=${parseInt(page) + 1}&limit=${limit}` : null,
   }
   return setPagination
 }

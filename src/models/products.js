@@ -21,7 +21,10 @@ const productsModels = {
     return actionQuery(`UPDATE products SET productName = '${data.productName}', price = '${data.price}', stock = '${data.stock}', photoProduct = '${data.photoProduct}', description = '${data.description}', discountPercent = '${data.discountPercent}', idTypeProduct = '${data.idTypeProduct}', homeDelivery = '${data.homeDelivery}', dineIn = '${data.dineIn}', takeAway = '${data.takeAway}' WHERE idProduct = ?`, idProduct)
   },
   getProductByTypeProduct: (typeProduct, limit, offset, order) => {
-    return actionQuery(`SELECT * FROM products INNER JOIN typeproduct ON typeproduct.idTypeProduct = products.idTypeProduct AND typeproduct.typeName = ? ORDER BY products.price ${order}`, typeProduct)
+    return actionQuery(`SELECT * FROM products INNER JOIN typeproduct ON typeproduct.idTypeProduct = products.idTypeProduct AND typeproduct.typeName = ? ORDER BY products.price ${order} LIMIT ${offset},${limit}`, typeProduct)
+  },
+  countTypeProduct: (typeProduct) => {
+    return actionQuery(`SELECT COUNT(*) AS totalData FROM typeproduct INNER JOIN products ON typeproduct.idTypeProduct = products.idTypeProduct WHERE typeName = '${typeProduct}'`)
   }
 }
 

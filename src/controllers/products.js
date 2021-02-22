@@ -46,7 +46,7 @@ const productsController =  {
   },
   insertProducts: (req, res, next) => {
     const idProduct = uuidv4()
-    const { productName, price, stock, description, discountPercent, idTypeProduct, homeDelivery, dineIn, takeAway, deliveryHourStart, deliveryHourEnd } = req.body
+    const { productName, price, stock, description, idTypeProduct, homeDelivery, dineIn, takeAway, deliveryHourStart, deliveryHourEnd } = req.body
     const data = {
       idProduct,
       productName,
@@ -56,7 +56,6 @@ const productsController =  {
       description,
       idTypeProduct,
       homeDelivery,
-      discountPercent,
       dineIn,
       takeAway,
       deliveryHourStart,

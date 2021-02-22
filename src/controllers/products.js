@@ -71,7 +71,7 @@ const productsController =  {
       })
       .catch((err) => {
         console.log(err)
-        const error = new createError(500, `Looks like server having trouble`)
+        const error = new createError(501, `Looks like server having trouble`)
         return next(error)
       })
   },

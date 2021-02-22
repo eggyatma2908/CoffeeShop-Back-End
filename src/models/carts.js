@@ -9,7 +9,6 @@ const cartModels = {
         } else if (where === 'delivered') {
             return actionQuery('SELECT * FROM cart WHERE deliveryStatus = "delivered"')
         } else if (where === 'allpendingnopagination') {
-            console.log('allpending')
             return actionQuery('SELECT * FROM cart WHERE deliveryStatus = "pending"')
         }
     },

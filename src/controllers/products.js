@@ -6,7 +6,6 @@ const { response } = require('../helpers/response')
 
 const productsController =  {
   getProducts: async (req, res, next) => {
-    console.log('mau')
     const { limit = 4, page = 1, order = "DESC" } = req.query
     const offset = (parseInt(page) - 1) * parseInt(limit)
     const productName = req.query.productName || null
@@ -70,7 +69,8 @@ const productsController =  {
           statusCode: 200
         }, null)
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err)
         const error = new createError(500, `Looks like server having trouble`)
         return next(error)
       })
@@ -137,7 +137,6 @@ const productsController =  {
     productsModels.getProductByTypeProduct(typeProduct, limit, offset, order) 
     .then(async(results) => {
       const setPagination = await pagination(limit, page, "products/typeProduct", "products", typeProduct)
-      console.log('type', typeProduct)
       const responseResults = {
         pagination: setPagination,
         products: results

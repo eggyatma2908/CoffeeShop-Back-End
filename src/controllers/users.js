@@ -32,7 +32,6 @@ const usersController =  {
   },
   getUserById: async (req, res, next) => {
     const { idUser } = req.params
-    console.log(idUser)
     if(!idUser){
       const error = new createError(400, 'Id user cannot be empty')
       return next(error)
@@ -104,7 +103,6 @@ const usersController =  {
               delete user.roleID
               delete user.updatedAt
               delete user.createdAt
-              console.log(user)
           // jsonwebtoken
           // accessToken 
           jwt.sign({ userId: user.id, email: user.email }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '24h' }, function (err, accessToken) {
@@ -140,7 +138,6 @@ const usersController =  {
   },
     updateUser: (req, res, next) => {
       const id = req.params.id
-      console.log(req.body.email)
     
       const { email, phoneNumber, gender, username, firstName, lastName, bornDate, address} = req.body
       const data = {
@@ -155,7 +152,6 @@ const usersController =  {
         photoProfile: `${process.env.BASE_URL}/upload/${req.file.filename}`,
         updatedAt: new Date()
       }
-      console.log('data', data)
       usersModels.updateUser(id, data)
       .then(result => {
         const resultUser = result
@@ -165,7 +161,6 @@ const usersController =  {
           }, null)
       })
       .catch(err => {
-          console.log('ini error sql',err)
           const error = new createError(500, 'Looks like server having trouble')
           return next(error)
       })
@@ -187,7 +182,6 @@ const usersController =  {
   },
   getRoleId: (req, res, next) => {
     const { id } = req.params
-    console.log(id)
     usersModels.searchRoleId(id)
     .then(result => {
       response(res, result[0], {

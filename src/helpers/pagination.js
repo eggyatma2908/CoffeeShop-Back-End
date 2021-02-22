@@ -2,7 +2,6 @@ const { countTypeProduct } = require('../models/products')
 
 exports.pagination = async (limit, page, endpoint, table, typeProduct) => {
   const users = await countTypeProduct(typeProduct)
-  console.log('type product', typeProduct)
   let totalData = users[0].totalData
 
   const totalPage = Math.ceil(totalData / limit)

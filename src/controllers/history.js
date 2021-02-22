@@ -10,13 +10,11 @@ const history = {
       const result = await historyModel.getOrderHistory(userId)
       response(res, result, {status: 'succeed', statusCode: 200}, null)
     } catch (error) {
-      console.log('error history', error)
       next(createError(500, 'Looks like server having trouble'))
     }
   },
   deleteOrderHistory: async (req, res, next) => {
     const orderId = req.params.id
-    console.log('orderId', orderId)
     try{
       await historyModel.deleteOrderHistory(orderId)
       response(res, 'delete successfully', {status: 'succeed', statusCode: 200}, null)

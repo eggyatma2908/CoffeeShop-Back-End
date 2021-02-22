@@ -48,7 +48,7 @@ app.post('/v1/purchase', function(req, res) {
         console.log('Charge Successful')
         res.json({ message: 'Successfully purchased items' })
       }).catch(function(error) {
-          console.log(error)
+        console.log(error)
         console.log('Charge Fail')
         res.status(500).end()
       })

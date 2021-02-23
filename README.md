@@ -8,11 +8,11 @@
       Express.js is a web application framework for Node.js.
     <br />
   <br/>
-    <a href="https://coffeeshop-gefy.netlify.app">View Demo</a>
+    <a href="https://coffeeshop-id.netlify.app">View Demo</a>
     ·
-    <a href="https://github.com/Gefyaqiilah/CoffeeShop-Back-End">Report Bug</a>
+    <a href="https://github.com/eggyatma2908/CoffeeShop-Back-End">Report Bug</a>
     ·
-    <a href="https://github.com/Gefyaqiilah/CoffeeShop-Back-End">Request Feature</a>
+    <a href="https://github.com/eggyatma2908/CoffeeShop-Back-End">Request Feature</a>
   </p>
   
 ## Built With
@@ -71,7 +71,7 @@ Contributions are what make the open source community such an amazing place to b
 5. Open a Pull Request
 
 ## Related Project
-* [`CoffeeShop Front-End`](https://github.com/Gefyaqiilah/CoffeeShop-Front-End)
+* [`CoffeeShop Front-End`](https://github.com/eggyatma2908/CoffeeShop-Front-End)
 
 ## Contributors
 <center>

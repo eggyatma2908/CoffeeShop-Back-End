@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/Gefyaqiilah/CoffeeShop-Back-End">
+  <a href="https://github.com/eggyatma2908/Telegram-Backend">
     <img src="./screenshots/coffee-logo.png"  width="100px" alt="Logo" width="80">
   </a>
 <h1 align="center">CoffeeShop</h1>

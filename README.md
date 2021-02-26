@@ -10,9 +10,9 @@
   <br/>
     <a href="https://coffeeshop-id.netlify.app">View Demo</a>
     ·
-    <a href="https://github.com/eggyatma2908/CoffeeShop-Back-End">Report Bug</a>
+    <a href="https://github.com/gefyaqiilah/CoffeeShop-Back-End">Report Bug</a>
     ·
-    <a href="https://github.com/eggyatma2908/CoffeeShop-Back-End">Request Feature</a>
+    <a href="https://github.com/gefyaqiilah/CoffeeShop-Back-End">Request Feature</a>
   </p>
   
 ## Built With
